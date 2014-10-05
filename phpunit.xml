@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+>
+    <testsuites>
+        <testsuite name="Package Test Suite">
+            <directory suffix=".php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <logging>
+        <log type="coverage-clover" target="../shippable/logs/clover.xml" />
+        <log type="coverage-crap4j" target="../shippable/logs/crap4j.xml" />
+        <log type="coverage-xml" target="../shippable/codecoverage" />
+        <log type="log-junit" target="../shippable/testresults/junit.xml" />
+    </logging>
+
+</phpunit>

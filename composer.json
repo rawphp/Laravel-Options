@@ -1,0 +1,28 @@
+{
+    "name": "rawphp/laravel-options",
+    "description": "Easy application key->value option storage.",
+    "keywords": [ "laravel","options" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Kaczocha",
+            "email": "tom@rawphp.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "illuminate/support": "4.2.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/commands"
+        ],
+        "psr-0": {
+            "RawPHP\\LaravelOptions\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
