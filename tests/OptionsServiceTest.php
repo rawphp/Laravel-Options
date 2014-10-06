@@ -49,29 +49,29 @@ class OptionsServiceTest extends TestCase
     /**
      * Setup before each test.
      */
-    public function setUp( )
+    public function setUp()
     {
-        parent::setUp( );
+        parent::setUp();
 
-        $this->options = new OptionsService( DB::getFacadeRoot( ), 'options' );
+        $this->options = new OptionsService( DB::getFacadeRoot(), 'options' );
     }
 
     /**
      * Cleanup after each test.
      */
-    public function tearDown( )
+    public function tearDown()
     {
-        parent::tearDown( );
+        parent::tearDown();
 
         $this->options = NULL;
 
-        DB::table( 'options' )->truncate( );
+        DB::table( 'options' )->truncate();
     }
 
     /**
      * Test options service instantiated correctly.
      */
-    public function testOptionsServiceInstantiatedCorrectly( )
+    public function testOptionsServiceInstantiatedCorrectly()
     {
         $this->assertNotNull( $this->options );
     }
@@ -79,7 +79,7 @@ class OptionsServiceTest extends TestCase
     /**
      * Test has is false on empty table.
      */
-    public function testHasIsFalse( )
+    public function testHasIsFalse()
     {
         $this->assertFalse( $this->options->has( 'nonexistent_key' ) );
     }
@@ -87,7 +87,7 @@ class OptionsServiceTest extends TestCase
     /**
      * Test adding key value.
      */
-    public function testAddingKeyValue( )
+    public function testAddingKeyValue()
     {
         $this->assertTrue( $this->options->add( 'my_key', 'my_value' ) );
 
@@ -101,7 +101,7 @@ class OptionsServiceTest extends TestCase
      *
      * @expectedException RawPHP\LaravelOptions\Exceptions\DuplicateKeyException
      */
-    public function testAddingDuplicateKey( )
+    public function testAddingDuplicateKey()
     {
         $this->assertTrue( $this->options->add( 'my_key', 'my_value' ) );
         $this->assertTrue( $this->options->add( 'my_key', 'my_value' ) );
@@ -110,7 +110,7 @@ class OptionsServiceTest extends TestCase
     /**
      * Test updating an option value.
      */
-    public function testUpdateOption( )
+    public function testUpdateOption()
     {
         $this->assertTrue( $this->options->add( 'my_key', 'my_value' ) );
 
@@ -123,7 +123,7 @@ class OptionsServiceTest extends TestCase
      *
      * @expectedException RawPHP\LaravelOptions\Exceptions\NonExistentOptionException
      */
-    public function testUpdateNonExistentOption( )
+    public function testUpdateNonExistentOption()
     {
         $this->assertFalse( $this->options->update( 'my_key', 'new_value' ) );
     }
@@ -131,7 +131,7 @@ class OptionsServiceTest extends TestCase
     /**
      * Test deleting an option.
      */
-    public function testDeleteOption( )
+    public function testDeleteOption()
     {
         $this->assertTrue( $this->options->add( 'my_key', 'my_value' ) );
         $this->assertTrue( $this->options->has( 'my_key' ) );
@@ -144,7 +144,7 @@ class OptionsServiceTest extends TestCase
      *
      * @expectedException RawPHP\LaravelOptions\Exceptions\NonExistentOptionException
      */
-    public function testDeleteNonExistentOption( )
+    public function testDeleteNonExistentOption()
     {
         $this->assertFalse( $this->options->delete( 'my_key' ) );
     }

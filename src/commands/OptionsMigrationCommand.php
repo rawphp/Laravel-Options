@@ -58,11 +58,11 @@ class OptionsMigrationCommand extends Command
     /**
      * Actions when the command is executed.
      */
-    public function fire( )
+    public function fire()
     {
         $this->laravel->view->addNamespace( 'laravel-options', substr( __DIR__, 0, -8 ) . 'views' );
 
-        $optionsTable = lcfirst( $this->getNameByOptionOrConfig( ) );
+        $optionsTable = lcfirst( $this->getNameByOptionOrConfig() );
 
         $this->line( '' );
         $this->info( 'Table: ' . $optionsTable );
@@ -71,17 +71,13 @@ class OptionsMigrationCommand extends Command
         $this->comment( $message );
         $this->line( '' );
 
-        if ( $this->confirm( 'Proceed with the migration creation? [Yes|No]' ) )
-        {
+        if ( $this->confirm( 'Proceed with the migration creation? [Yes|No]' ) ) {
             $this->line( '' );
             $this->info( 'Creating migration...' );
 
-            if ( $this->createMigration( $optionsTable ) )
-            {
+            if ( $this->createMigration( $optionsTable ) ) {
                 $this->info( 'Migration successfully created!' );
-            }
-            else
-            {
+            } else {
                 $this->error( "Couldn't create migration.\nCheck the write permissions within the app/database/migrations directory." );
             }
 
@@ -90,10 +86,9 @@ class OptionsMigrationCommand extends Command
 
     }
 
-    protected function getNameByOptionOrConfig( )
+    protected function getNameByOptionOrConfig()
     {
-        if ( $name = $this->option( 'table' ) )
-        {
+        if ( $name = $this->option( 'table' ) ) {
             return $name;
         }
 
@@ -105,7 +100,7 @@ class OptionsMigrationCommand extends Command
      *
      * @return array
      */
-    protected function getOptions( )
+    protected function getOptions()
     {
         return [
             [ 'table', NULL, InputOption::VALUE_OPTIONAL, 'Options table name.' ],
@@ -121,13 +116,12 @@ class OptionsMigrationCommand extends Command
      */
     protected function createMigration( $optionsTable = 'options' )
     {
-        $migrationFile = $this->laravel->path . '/database/migrations/' . date( 'Y_m_d_His' ) .  '_Create_Options_Table.php';
-        $output        = $this->laravel->view->make( 'laravel-options::generators.migration' )->with( 'table', $optionsTable )->render( );
+        $migrationFile = $this->laravel->path . '/database/migrations/' . date( 'Y_m_d_His' ) . '_Create_Options_Table.php';
+        $output = $this->laravel->view->make( 'laravel-options::generators.migration' )->with( 'table', $optionsTable )->render();
 
         //dd( $output );
 
-        if ( !file_exists( $migrationFile ) && $fs = fopen( $migrationFile, 'x' ) )
-        {
+        if ( !file_exists( $migrationFile ) && $fs = fopen( $migrationFile, 'x' ) ) {
             fwrite( $fs, $output );
             fclose( $fs );
 

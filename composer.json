@@ -14,11 +14,10 @@
         "illuminate/support": "4.2.*"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master"
     },
     "autoload": {
         "classmap": [
-            "src/commands"
+            "src/Commands"
         ],
         "psr-0": {
             "RawPHP\\LaravelOptions\\": "src/"

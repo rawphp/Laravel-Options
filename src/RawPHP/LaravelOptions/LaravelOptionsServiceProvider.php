@@ -36,57 +36,61 @@
 namespace RawPHP\LaravelOptions;
 
 use Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use RawPHP\LaravelOptions\Commands\OptionsMigrationCommand;
 
 class LaravelOptionsServiceProvider extends ServiceProvider
 {
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = FALSE;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = FALSE;
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot( )
-	{
-		$this->package( 'rawphp/laravel-options' );
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->package( 'rawphp/laravel-options' );
 
-        $this->commands( 'command.laraveloptions.migration' );
-	}
+        $this->commands( 'command.laravel-options.migration' );
+    }
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register( )
-	{
-        $this->app->bindShared( 'options', function( )
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bindShared( 'options', function ()
         {
-            return new OptionsService( \DB, Config::get( 'laravel-options::options_table_name' ) );
+            return new OptionsService(
+                $this->app[ 'db' ],
+                Config::get( 'laravel-options::options_table_name' )
+            );
         } );
 
-        $this->app->bindShared( 'command.laraveloptions.migration', function( $app )
+        $this->app->bindShared( 'command.laravel-options.migration', function ( $app )
         {
-            return new OptionsMigrationCommand( );
+            return new OptionsMigrationCommand();
         } );
-	}
+    }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides( )
-	{
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
         return [
-            'command.laraveloptions.migration',
+            'command.laravel-options.migration',
         ];
-	}
+    }
 }

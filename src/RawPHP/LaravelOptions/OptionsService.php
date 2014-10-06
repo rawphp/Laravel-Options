@@ -56,7 +56,7 @@ class OptionsService implements IOptions
      *
      * @var string
      */
-    protected $optionsTable         = 'options';
+    protected $optionsTable = 'options';
 
     /**
      * @var \Illuminate\Database\DatabaseManager
@@ -65,6 +65,9 @@ class OptionsService implements IOptions
 
     /**
      * Constructs a new instance of OptionsService.
+     *
+     * @param DatabaseManager $db    the database manager
+     * @param string          $table the table name
      */
     public function __construct( DatabaseManager $db, $table )
     {
@@ -82,7 +85,7 @@ class OptionsService implements IOptions
      */
     public function get( $key )
     {
-        $result = $this->db->table( $this->optionsTable )->where( 'option_key', '=', $key )->get( );
+        $result = $this->db->table( $this->optionsTable )->where( 'option_key', '=', $key )->get();
 
         if ( !empty( $result ) )
         {
@@ -109,12 +112,11 @@ class OptionsService implements IOptions
             $result = $this->db->table( $this->optionsTable )->insert( [ 'option_key' => $key, 'option_value' => $value ] );
 
             return FALSE !== $result;
-        }
-        catch( \Exception $e )
+        } catch ( \Exception $e )
         {
-            if ( FALSE !== strstr( $e->getMessage( ), 'Duplicate entry' ) )
+            if ( FALSE !== strstr( $e->getMessage(), 'Duplicate entry' ) )
             {
-                throw new DuplicateKeyException( 'The option key: "' . $key . '" already exists', $e->getCode( ), $e );
+                throw new DuplicateKeyException( 'The option key: "' . $key . '" already exists', $e->getCode(), $e );
             }
         }
     }
@@ -142,6 +144,20 @@ class OptionsService implements IOptions
     }
 
     /**
+     * Checks if a key exists in the database.
+     *
+     * @param string $key the option name
+     *
+     * @return bool TRUE if key exists, otherwise FALSE
+     */
+    public function has( $key )
+    {
+        $result = $this->db->table( $this->optionsTable )->where( 'option_key', $key )->count();
+
+        return ( 0 < $result );
+    }
+
+    /**
      * Deletes an option from the database.
      *
      * @param string $key option name
@@ -152,7 +168,7 @@ class OptionsService implements IOptions
      */
     public function delete( $key )
     {
-        $result = $this->db->table( $this->optionsTable )->where( [ 'option_key' => $key ] )->delete( );
+        $result = $this->db->table( $this->optionsTable )->where( [ 'option_key' => $key ] )->delete();
 
         if ( 0 === $result && !$this->has( $key ) )
         {
@@ -160,19 +176,5 @@ class OptionsService implements IOptions
         }
 
         return ( FALSE !== $result );
-    }
-
-    /**
-     * Checks if a key exists in the database.
-     *
-     * @param string $key the option name
-     *
-     * @return bool TRUE if key exists, otherwise FALSE
-     */
-    public function has( $key )
-    {
-        $result = $this->db->table( $this->optionsTable )->where( 'option_key', $key )->count( );
-
-        return ( 0 < $result );
     }
 }
