@@ -27,7 +27,7 @@
  *
  * @category  PHP
  * @package   RawPHP/LaravelOptions/Commands
- * @author    Tom Kaczohca <tom@rawphp.org>
+ * @author    Tom Kaczocha <tom.kaczocha.code@gmail.com>
  * @copyright 2014 Tom Kaczocha
  * @license   http://rawphp.org/license.txt MIT
  * @link      http://rawphp.org/

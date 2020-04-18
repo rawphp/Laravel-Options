@@ -6,12 +6,12 @@
     "authors": [
         {
             "name": "Tom Kaczocha",
-            "email": "tom@rawphp.org"
+            "email": "tom.kaczocha.code@gmail.com"
         }
     ],
     "require": {
         "php": ">=5.3",
-        "illuminate/support": "4.2.*"
+        "illuminate/support": ">=4.2"
     },
     "require-dev": {
     },
